@@ -21,6 +21,7 @@ namespace DAL.Context
         public DbSet<Character>Characters { get; set; }
         public DbSet<Episode>Episodes { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public SqlDbContext(DbContextOptions options,IConfiguration configuration) : base(options)
         {
