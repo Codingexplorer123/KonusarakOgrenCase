@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Net.NetworkInformation;
 
 namespace WebApplication.Controllers
 {
@@ -22,7 +24,7 @@ namespace WebApplication.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
-            if(_context.Characters == null)
+            if (_context.Characters == null)
                 return NotFound();
             return await _context.Characters.ToListAsync();
         }
@@ -35,7 +37,7 @@ namespace WebApplication.Controllers
 
             var character = await _context.Characters.FindAsync(id);
 
-            if(character == null)
+            if (character == null)
                 return NotFound();
 
             return Ok(character);
@@ -45,10 +47,10 @@ namespace WebApplication.Controllers
         {
             try
             {
-                
+
                 var idArray = ids.Trim('[', ']').Split(',').Select(int.Parse).ToArray();
 
-                
+
                 var characters = await _context.Characters
                     .Where(c => idArray.Contains(c.Id))
                     .ToListAsync();
@@ -62,6 +64,28 @@ namespace WebApplication.Controllers
             {
                 return BadRequest("Invalid format for character ids.");
             }
+        }
+        [HttpGet("filter")]
+        // /api/character/filter? name = Rick & status = Alive
+        public async Task<ActionResult<IEnumerable<Character>>> FilterCharacters
+            ([FromBody] string? name, [FromBody] string? status, [FromBody] string? species,
+            [FromBody] string? type, [FromBody] string? gender)
+        {
+            Expression<Func<Character, bool>> filterExpression = c =>
+             (string.IsNullOrWhiteSpace(name) || c.Name.ToLower().Contains(name.ToLower())) &&
+             (string.IsNullOrWhiteSpace(status) || c.Status.ToLower() == status.ToLower()) &&
+             (string.IsNullOrWhiteSpace(species) || c.Species.ToLower() == species.ToLower()) &&
+             (string.IsNullOrWhiteSpace(type) || c.Type.ToLower() == type.ToLower()) &&
+             (string.IsNullOrWhiteSpace(gender) || c.Gender.ToLower() == gender.ToLower());
+
+            var filteredCharacters = await _context.Characters
+               .Where(filterExpression)
+               .ToListAsync();
+
+            if (filteredCharacters == null || filteredCharacters.Count == 0)
+                return NotFound();
+
+            return Ok(filteredCharacters);
         }
 
     }

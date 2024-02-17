@@ -3,6 +3,7 @@ using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace WebApplication.Controllers
 {
@@ -39,7 +40,7 @@ namespace WebApplication.Controllers
             return Ok(location);
         }
         [HttpGet("{ids}")]
-        public async Task<ActionResult<IEnumerable<Character>>> GetMultipleLocations([FromRoute] string ids)
+        public async Task<ActionResult<IEnumerable<Location>>> GetMultipleLocations([FromRoute] string ids)
         {
             try
             {
@@ -60,6 +61,26 @@ namespace WebApplication.Controllers
             {
                 return BadRequest("Invalid format for location ids.");
             }
+        }
+        [HttpGet("filter")]
+        ///api/location/filter?name=Rick&status=Alive
+        public async Task<ActionResult<IEnumerable<Location>>> FilterCharacters
+         ([FromQuery] string? name, [FromQuery] string? type, [FromQuery] string? dimension)
+        {
+            Expression<Func<Location, bool>> filterExpression = c =>
+             (string.IsNullOrWhiteSpace(name) || c.Name.ToLower().Contains(name.ToLower())) ||
+             (string.IsNullOrWhiteSpace(type) || c.Type.ToLower() == type.ToLower()) ||
+             (string.IsNullOrWhiteSpace(type) || c.Dimension.ToLower() == dimension.ToLower());
+
+
+            var filteredLocations = await _context.Locations
+               .Where(filterExpression)
+               .ToListAsync();
+
+            if (filteredLocations == null || filteredLocations.Count == 0)
+                return NotFound();
+
+            return Ok(filteredLocations);
         }
     }
 }

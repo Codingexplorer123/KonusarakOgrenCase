@@ -3,6 +3,8 @@ using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace WebApplication.Controllers
 {
@@ -26,7 +28,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetEpisode(int id)
+        public async Task<ActionResult<Episode>> GetEpisode(int id)
         {
             if (_context.Episodes == null)
                 return BadRequest();
@@ -39,7 +41,7 @@ namespace WebApplication.Controllers
             return Ok(episode);
         }
         [HttpGet("{ids}")]
-        public async Task<ActionResult<IEnumerable<Character>>> GetMultipleEpisodes([FromRoute] string ids)
+        public async Task<ActionResult<IEnumerable<Episode>>> GetMultipleEpisodes([FromRoute] string ids)
         {
             try
             {
@@ -60,6 +62,25 @@ namespace WebApplication.Controllers
             {
                 return BadRequest("Invalid format for episodes ids.");
             }
+        }
+        [HttpGet("filter")]
+        ///api/episode/filter?name=Rick&status=Alive
+        public async Task<ActionResult<IEnumerable<Episode>>> FilterCharacters
+           ([FromQuery] string? name, [FromQuery] string? episode)
+        {
+            Expression<Func<Episode, bool>> filterExpression = c =>
+             (string.IsNullOrWhiteSpace(name) || c.Name.ToLower().Contains(name.ToLower())) ||
+             (string.IsNullOrWhiteSpace(episode) || c.episode.ToLower() == episode.ToLower()); 
+            
+
+            var filteredEpisodes = await _context.Episodes
+               .Where(filterExpression)
+               .ToListAsync();
+
+            if (filteredEpisodes == null || filteredEpisodes.Count == 0)
+                return NotFound();
+
+            return Ok(filteredEpisodes);
         }
     }
 }
