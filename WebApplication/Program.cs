@@ -28,7 +28,7 @@ builder.Services.AddDbContext<SqlDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection")));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-              .AddJwtBearer(options => options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+              .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
               {
                   ValidateAudience = true,
                   ValidateIssuer = true,
