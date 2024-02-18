@@ -1,0 +1,80 @@
+$font-logo: "Kanit", sans-serif;
+$font-nav: "Source Sans Pro", sans-serif;
+
+$button-font-size: 12px;
+$logo-font-size: 3em;
+
+$primary-color: #2b2e4a;
+$secondary-color: #e84545;
+$tertiary-color: #903749;
+$quaternary-color: #53354a;
+$logo-color: #573a44;
+
+$bg-hover-color: rgb(212, 248, 161);
+$background-gradient:  linear-gradient(90deg, rgba(151,206,76,1) 0%, rgba(240,225,74,1) 22%, rgba(44,172,2,1) 48%, rgba(49,174,4,1) 61%, rgba(214,218,64,1) 78%, rgba(164,209,76,1) 100%);
+.navbar {
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  background: $background-gradient;
+  top: 0px;
+  z-index: 2;
+  font-size: $button-font-size;
+  width: 100%;
+  line-height: 65px;
+  letter-spacing: 1px;
+  font-family: $font-nav;
+  font-weight: 600;
+}
+.navbar-comp {
+  display: flex;
+  justify-content: space-between;
+  width: 1024px;
+  align-items: center;
+}
+.category-buttons {
+  line-height: 65px;
+  display: flex;
+}
+
+.navbar-button {
+  font-size: 1.5em;
+  font: $font-nav;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: white;
+}
+.logo {
+  letter-spacing: -2.2px;
+  margin-right: 10px;
+  font: $font-logo;
+  font-size: $logo-font-size;
+  font-style: italic;
+}
+.logo > span {
+  color: $logo-color;
+}
+.navbar-button:hover:not(.logo) {
+  color: $primary-color;
+  background-color: $bg-hover-color;
+}
+.logo:hover {
+  color: $logo-color;
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar-comp {
+    width: 100%;
+  }
+  .navbar-button {
+    font-size: 1.2em;
+  }
+  .logo {
+    font-size: 2em;
+  }
+  //mobile navbar dropdown
+ 
+  
+
+}

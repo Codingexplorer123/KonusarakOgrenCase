@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+$font-nav: "Source Sans Pro", sans-serif;
+
+body {
+  font-family: $font-nav;
+  margin: 0;
+  background-color: #ffeeee;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pages{
+  margin-top:24px ;
+}
