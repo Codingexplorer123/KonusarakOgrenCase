@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{5AF4F134-D2BE-41DE-88A7-2590BEFAE01B}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "rick_morty", "..\Rick_Morty\rick_morty.esproj", "{2285179E-712C-4349-8705-558E8266FDB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{5AF4F134-D2BE-41DE-88A7-2590BEFAE01B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AF4F134-D2BE-41DE-88A7-2590BEFAE01B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AF4F134-D2BE-41DE-88A7-2590BEFAE01B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2285179E-712C-4349-8705-558E8266FDB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2285179E-712C-4349-8705-558E8266FDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2285179E-712C-4349-8705-558E8266FDB8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2285179E-712C-4349-8705-558E8266FDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2285179E-712C-4349-8705-558E8266FDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2285179E-712C-4349-8705-558E8266FDB8}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
